@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.so
+
+# Django
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.db
+*.mo
+*.swp
+media/
+staticfiles/
+local_settings.py
+.env
+.env.*
+migrations/
+
+# Pipenv
+Pipfile.lock
+
+# Virtual environments
+.env/
+venv/
+ENV/
+env/
+.venv/
+
+# VS Code
+.vscode/
+
+# IDEs
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Migrations - chỉ ignore nếu bạn generate thủ công
+# **Không nên xóa nếu làm việc nhóm**
+# */migrations/
+
+# GraphQL schema (nếu tự tạo)
+schema.graphql
+
+# Next.js (nếu dùng làm frontend)
+.next/
+out/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+*.log
+*.bak
+
+# OS-specific
+ehthumbs.db
+Icon?
