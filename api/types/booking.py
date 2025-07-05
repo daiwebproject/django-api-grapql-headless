@@ -77,20 +77,11 @@ class BookingType(DjangoObjectType):
         return self.duration_minutes
     
     def resolve_can_cancel(self, info):
-        from django.utils import timezone
-        from datetime import timedelta
-        
-        # Can cancel if booking is at least 2 hours away and not already cancelled/completed
-        if self.status in ['cancelled', 'completed', 'no_show']:
-            return False
-        
-        now = timezone.now()
-        return self.start_datetime > now + timedelta(hours=2)
-    
+        return self.can_cancel
+
     def resolve_can_reschedule(self, info):
         # Similar logic to cancellation
-        return self.can_cancel and self.status in ['pending', 'confirmed']
-    
+        return self.can_reschedule    
     def resolve_time_until_appointment(self, info):
         from django.utils import timezone
         

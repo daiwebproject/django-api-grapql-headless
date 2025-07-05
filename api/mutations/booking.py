@@ -300,10 +300,19 @@ class CancelBooking(graphene.Mutation):
                 changed_by=user,
                 notes=f'Booking cancelled by customer. Reason: {reason or "No reason provided"}'
             )
-            
-            # Handle refund if needed
-            # TODO: Implement refund logic based on cancellation policy
-            
+            if booking.payment_status == 'paid':
+                PaymentTransaction.objects.create(
+                    transaction_id=f"RFND{booking.booking_id.hex[:8].upper()}",
+                    booking=booking,
+                    payment_method=booking.payment_method or 'unknown',
+                    amount=booking.final_price,
+                    status='refunded',
+                    gateway_transaction_id=booking.payment_reference,
+                    completed_at=timezone.now(),
+                )
+                booking.payment_status = 'refunded'
+                booking.save(update_fields=['payment_status'])
+
             return CancelBooking(
                 booking=booking,
                 success=True,

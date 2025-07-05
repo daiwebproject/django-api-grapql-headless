@@ -1,5 +1,7 @@
 asgiref==3.9.0
 Babel==2.13.1
+channels>=4
+channels-redis>=4
 Django==4.2.5
 django-cors-headers==4.3.1
 django-extra-views==0.14.0

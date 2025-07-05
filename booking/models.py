@@ -146,6 +146,23 @@ class Booking(models.Model):
     def duration_minutes(self):
         return (self.end_datetime - self.start_datetime).total_seconds() / 60
 
+    @property
+    def can_cancel(self):
+        """Return True if the booking can be cancelled."""
+        from django.utils import timezone
+        from datetime import timedelta
+
+        if self.status in ['cancelled', 'completed', 'no_show']:
+            return False
+
+        now = timezone.now()
+        return self.start_datetime > now + timedelta(hours=2)
+
+    @property
+    def can_reschedule(self):
+        """Return True if the booking can be rescheduled."""
+        return self.can_cancel and self.status in ['pending', 'confirmed']
+
 class BookingHistory(models.Model):
     """Track booking status changes"""
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name='history')
@@ -158,3 +175,5 @@ class BookingHistory(models.Model):
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = "Booking Histories"
+
+
